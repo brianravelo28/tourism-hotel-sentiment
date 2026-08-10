@@ -4,7 +4,7 @@ from pathlib import Path
 import re
 
 # Load JSON
-data_path = Path(__file__).parent / 'data'
+data_path = Path(__file__).parent.parent / 'data'
 json_file = data_path / 'raw_reviews.json'
 
 with open(json_file, 'r', encoding='utf-8') as f:
@@ -66,5 +66,5 @@ print(f"\nAverage rating: {df['rating'].mean():.2f}")
 # Save to CSV
 output_file = data_path / 'raw_reviews.csv'
 df.to_csv(output_file, index=False, encoding='utf-8')
-print(f"\n✓ Saved to: {output_file}")
+print(f"\nSaved to: {output_file}")
 print(f"Shape: {df.shape}")

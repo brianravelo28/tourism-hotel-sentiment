@@ -3,7 +3,7 @@ import numpy as np
 from pathlib import Path
 from datetime import datetime
 
-data_path = Path(__file__).parent / 'data'
+data_path = Path(__file__).parent.parent / 'dashboard' / 'data'
 df = pd.read_csv(data_path / 'processed_reviews.csv', parse_dates=['published_date'])
 
 print(f"Loaded {len(df)} processed reviews")

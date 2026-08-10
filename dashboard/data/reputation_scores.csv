@@ -1,0 +1,23 @@
+hotel_id,hotel_name,city,reputation_score,competitor_rank,avg_sentiment,review_count,en_count,es_count,top_complaints,top_praise
+217397,Homewood Suites by Hilton Miami-Airport/Blue Lagoon,Miami,9.49,1,0.9523341262340546,50,50,0,,jorge; hotel; service
+85029,Intercontinental Miami By IHG,Miami,9.26,2,0.904662336013755,49,48,1,hotel,service; hotel
+1149365,Kimpton Epic Hotel by IHG,Miami,9.25,3,0.916599414786514,49,49,0,hotel,hotel; jorge; service
+85031,Miami Marriott Biscayne Bay,Miami,9.21,4,0.9101419997215271,50,50,0,hotel,service; hotel
+87115,Sonesta Miami Airport,Miami,9.08,5,0.9376492142677307,20,20,0,,service; hotel; jasmine
+25150899,The Elser Hotel Miami,Miami,9.03,6,0.9070469462871551,50,50,0,hotel,hotel; manuel; service
+288592,"Brickell Arch, A Luxury Collection Hotel, Miami",Miami,8.93,7,0.8964755600690841,50,50,0,hotel,service; hotel; david
+10673726,Hampton Inn & Suites Miami Wynwood Design District,Miami,8.92,8,0.9112164521217346,50,50,0,hotel; service,hotel; service; jasmine
+2253238,Hampton Inn & Suites By Hilton Miami Brickell Downtown,Miami,8.89,9,0.8356030344963074,50,50,0,hotel,hotel; service
+6727321,The Vagabond Hotel Miami,Miami,8.82,10,0.849401982463136,49,49,0,hotel,hotel; service; jorge
+24889567,Arlo Wynwood,Miami,8.8,11,0.9294680476188659,20,20,0,hotel,hotel; service
+217395,Mayfair House Hotel & Garden,Miami,8.78,12,0.869907414317131,50,50,0,hotel,service; hotel; david
+15089284,Hyde Midtown Miami,Miami,8.41,13,0.8507737350463868,50,50,0,hotel,hotel; service; shaun
+15809999,Mr. C Miami Coconut Grove,Miami,8.21,14,0.8561525046825409,40,40,0,hotel,hotel; service
+235516,AC Hotel Miami Wynwood,Miami,7.92,15,0.8791950392723084,50,50,0,hotel,hotel; service; jasmine
+25222291,Holiday Inn Orlando International Dr-ICON by IHG,Orlando,9.36,1,0.928681583404541,50,50,0,,shaun; hotel; jasmine
+85329,Castle Hotel Autograph Collection,Orlando,9.29,2,0.957075622677803,20,20,0,,service; hotel
+1308392,Signia By Hilton Orlando - An Official Walt Disney WorldR Hotel,Orlando,9.24,3,0.9039140433073044,50,50,0,hotel,service; jasmine; hotel
+120210,The Florida Hotel & Conference Center,Orlando,9.2,4,0.9402684360742569,20,20,0,,hotel; service
+12451425,Universal Aventura Hotel,Orlando,7.73,5,0.7211597902434213,49,49,0,hotel,hotel; service
+85401,Rosen Inn at Pointe Orlando,Orlando,7.24,6,0.7105833023786545,20,20,0,hotel,hotel
+3932244,Universal Cabana Bay Beach Resort,Orlando,7.2,7,0.7460557669401169,12,12,0,hotel,hotel

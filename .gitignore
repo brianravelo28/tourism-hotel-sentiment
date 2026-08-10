@@ -3,7 +3,12 @@ venv_deploy_test/
 __pycache__/
 *.pyc
 .DS_Store
+.ipynb_checkpoints/
 
 # Raw scrape data contains reviewer PII (names, usernames, profile links) - not for publishing
 data/raw_reviews.json
 data/raw_reviews.csv
+
+# Credentials
+.env
+*.token

@@ -6,8 +6,5 @@ bertopic
 scikit-learn
 plotly
 sentence-transformers
-nltk
 sentencepiece
 protobuf
-dash
-gunicorn

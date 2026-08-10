@@ -11,7 +11,8 @@ os.environ['TOKENIZERS_PARALLELISM'] = 'false'
 warnings.filterwarnings('ignore')
 
 # Load raw reviews
-data_path = Path(__file__).parent / 'data'
+data_path = Path(__file__).parent.parent / 'data'
+output_path = Path(__file__).parent.parent / 'dashboard' / 'data'
 df = pd.read_csv(data_path / 'raw_reviews.csv')
 
 print(f"Loaded {len(df)} reviews")
@@ -125,7 +126,7 @@ output_cols = ['review_id', 'hotel_id', 'hotel_name', 'city', 'review_text',
 df_processed = df_processed[[col for col in output_cols if col in df_processed.columns]]
 
 # Save
-output_file = data_path / 'processed_reviews.csv'
+output_file = output_path / 'processed_reviews.csv'
 df_processed.to_csv(output_file, index=False, encoding='utf-8')
 
 print(f"\n=== PROCESSING COMPLETE ===")
