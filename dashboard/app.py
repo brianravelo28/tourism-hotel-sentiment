@@ -43,6 +43,12 @@ app = Dash(__name__, title='Hotel Reputation Dashboard - Miami & Orlando', suppr
 server = app.server
 
 
+@server.route('/healthz')
+def healthz():
+    """Lightweight health check for the host (Render pings this instead of rendering the whole Dash page)."""
+    return 'ok'
+
+
 def kpi(label, value, sub=None):
     return html.Div([html.Div(label, className='kpi-label'), html.Div(value, className='kpi-value'),
                      html.Div(sub or '', className='kpi-sub')], className='kpi')

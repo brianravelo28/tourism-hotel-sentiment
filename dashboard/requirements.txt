@@ -1,4 +1,4 @@
-pandas
-plotly
-dash
-gunicorn
+pandas>=2.2,<4
+plotly>=6,<7
+dash>=4,<5
+gunicorn>=22

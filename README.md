@@ -74,6 +74,14 @@ python app.py
 
 Then open http://localhost:7860.
 
+## Deploy (Render)
+
+`render.yaml` is a Render Blueprint for the free tier: in Render choose **New + > Blueprint**, pick this repo, and
+deploy. It builds from `dashboard/` (Python 3.11, one gunicorn worker) and health-checks `/healthz`. The app uses
+about 130 MB of memory, well inside the 512 MB free limit. Free services sleep after 15 minutes idle, so the first
+visit after a quiet spell takes about a minute to wake. `dashboard/Dockerfile` is an alternative for Docker hosts
+such as Hugging Face Spaces.
+
 ## Rebuild the data
 
 Needs the full `requirements.txt` and the raw Apify exports in `data/` (see [`data/README.md`](data/README.md)).

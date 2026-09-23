@@ -1,0 +1,14 @@
+# Render Blueprint: New + -> Blueprint -> pick this repo.
+# The app lives in dashboard/, so rootDir points there and its own requirements.txt is used.
+services:
+  - type: web
+    name: hotel-reputation-dashboard
+    runtime: python
+    plan: free
+    rootDir: dashboard
+    buildCommand: pip install -r requirements.txt
+    startCommand: gunicorn app:server --workers 1 --threads 4 --timeout 120 --bind 0.0.0.0:$PORT
+    healthCheckPath: /healthz
+    envVars:
+      - key: PYTHON_VERSION
+        value: 3.11.9
