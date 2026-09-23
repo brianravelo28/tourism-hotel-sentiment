@@ -1,0 +1,37 @@
+{
+  "startUrls": [
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d25150899-Reviews-The_Elser_Hotel_Miami-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d6727321-Reviews-The_Vagabond_Hotel_Miami-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d24889567-Reviews-Arlo_Wynwood-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d288592-Reviews-Brickell_Arch_A_Luxury_Collection_Hotel_Miami-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d217395-Reviews-Mayfair_House_Hotel_Garden-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d15089284-Reviews-Hyde_Midtown_Miami-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d235516-Reviews-AC_Hotel_Miami_Wynwood-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d10673726-Reviews-Hampton_Inn_Suites_Miami_Wynwood_Design_District-Miami_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d87115-Reviews-Sonesta_Miami_Airport-Miami_Florida.html"
+    }
+  ],
+  "maxItemsPerQuery": 150,
+  "reviewsLanguages": [
+    "es"
+  ],
+  "disableMachineTranslations": true,
+  "scrapeReviewerInfo": false
+}

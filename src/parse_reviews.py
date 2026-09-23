@@ -5,12 +5,22 @@ import re
 
 # Load JSON
 data_path = Path(__file__).parent.parent / 'data'
-json_file = data_path / 'raw_reviews.json'
 
-with open(json_file, 'r', encoding='utf-8') as f:
-    reviews = json.load(f)
+# Merge every raw Apify export (the original scrape plus any dataset_*.json runs),
+# de-duplicating on TripAdvisor review id so overlapping runs don't double-count.
+json_files = [data_path / 'raw_reviews.json'] + sorted(data_path.glob('dataset_*.json'))
+by_id = {}
+for json_file in json_files:
+    if not json_file.exists():
+        continue
+    with open(json_file, 'r', encoding='utf-8') as f:
+        batch = json.load(f)
+    print(f"{json_file.name}: {len(batch)} reviews")
+    for review in batch:
+        by_id[review['id']] = review
+reviews = list(by_id.values())
 
-print(f"Loaded {len(reviews)} reviews from JSON")
+print(f"Loaded {len(reviews)} unique reviews from {len(json_files)} exports")
 
 # Parse into DataFrame
 rows = []
@@ -25,7 +35,10 @@ for review in reviews:
         'city': city,
         'review_text': review.get('text', ''),
         'rating': review.get('rating'),
-        'language': review.get('lang', 'en'),
+        # 'lang' is the language of the returned text (TripAdvisor machine-translates some
+        # reviews into English); 'originalLanguage' is what the guest actually wrote in.
+        'language': review.get('originalLanguage') or review.get('lang', 'en'),
+        'is_machine_translated': bool(review.get('isMachineTranslated')),
         'trip_type': review.get('tripType'),
         'published_date': review.get('publishedDate'),
         'source': 'tripadvisor'

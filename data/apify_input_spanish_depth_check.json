@@ -1,0 +1,10 @@
+{
+  "startUrls": [
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d85031-Reviews-Miami_Marriott_Biscayne_Bay-Miami_Florida.html" },
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d2253238-Reviews-Hampton_Inn_Suites_By_Hilton_Miami_Brickell_Downtown-Miami_Florida.html" }
+  ],
+  "maxItemsPerQuery": 200,
+  "reviewsLanguages": ["es"],
+  "disableMachineTranslations": true,
+  "scrapeReviewerInfo": false
+}

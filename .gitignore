@@ -8,7 +8,12 @@ __pycache__/
 # Raw scrape data contains reviewer PII (names, usernames, profile links) - not for publishing
 data/raw_reviews.json
 data/raw_reviews.csv
+# Raw Apify exports (named dataset_*.json / .csv) - keep local, don't publish
+data/dataset_*
 
 # Credentials
 .env
 *.token
+
+# Pilot / interim NLP outputs
+data/interim/

@@ -1,0 +1,34 @@
+{
+  "startUrls": [
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d3932244-Reviews-Universal_Cabana_Bay_Beach_Resort-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d12451425-Reviews-Universal_Aventura_Hotel-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d85401-Reviews-Rosen_Inn_at_Pointe_Orlando-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d120210-Reviews-The_Florida_Hotel_Conference_Center-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d1382900-Reviews-Hilton_Orlando-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d25222291-Reviews-Holiday_Inn_Orlando_International_Dr_ICON_by_IHG-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d1308392-Reviews-Signia_By_Hilton_Orlando_An_Official_Walt_Disney_WorldR_Hotel-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d85329-Reviews-Castle_Hotel_Autograph_Collection-Orlando_Florida.html"
+    }
+  ],
+  "maxItemsPerQuery": 150,
+  "reviewsLanguages": [
+    "es"
+  ],
+  "disableMachineTranslations": true,
+  "scrapeReviewerInfo": false
+}

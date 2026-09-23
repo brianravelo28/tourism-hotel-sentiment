@@ -29,3 +29,11 @@ includes reviewer PII (names, usernames, profile links, avatar images) scraped f
 pages. The pipeline strips all of that out by the time data reaches `processed_reviews.csv` — only
 `review_id`, `hotel_id`, review text/rating/date, and derived sentiment/topic fields survive. Those
 derived files are small and PII-free, so they're committed under `/dashboard/data`.
+
+## Apify input files
+
+The `apify_input_*.json` files are the exact actor inputs used for each scrape run. All of them set
+`reviewsLanguages: ["es"]` (the actor returns English first, then Spanish, so a deep cap is needed to reach
+meaningful Spanish volume), `disableMachineTranslations: true` (so Spanish reviews arrive in the original
+language), and `scrapeReviewerInfo: false` (so no reviewer PII is collected). `*_batch2_next_month.json`
+covers Orlando hotels not yet scraped.

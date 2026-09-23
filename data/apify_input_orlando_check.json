@@ -1,0 +1,9 @@
+{
+  "startUrls": [
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d1382900-Reviews-Hilton_Orlando-Orlando_Florida.html" }
+  ],
+  "maxItemsPerQuery": 30,
+  "reviewsLanguages": ["es"],
+  "disableMachineTranslations": true,
+  "scrapeReviewerInfo": false
+}

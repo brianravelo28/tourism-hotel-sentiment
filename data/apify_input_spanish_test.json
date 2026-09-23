@@ -1,0 +1,13 @@
+{
+  "startUrls": [
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d85029-Reviews-Intercontinental_Miami_By_IHG-Miami_Florida.html" },
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d1149365-Reviews-Kimpton_Epic_Hotel_by_IHG-Miami_Florida.html" },
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d85031-Reviews-Miami_Marriott_Biscayne_Bay-Miami_Florida.html" },
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d2253238-Reviews-Hampton_Inn_Suites_By_Hilton_Miami_Brickell_Downtown-Miami_Florida.html" },
+    { "url": "https://www.tripadvisor.com/Hotel_Review-g34438-d217397-Reviews-Homewood_Suites_by_Hilton_Miami_Airport_Blue_Lagoon-Miami_Florida.html" }
+  ],
+  "maxItemsPerQuery": 100,
+  "reviewsLanguages": ["es"],
+  "disableMachineTranslations": true,
+  "scrapeReviewerInfo": false
+}

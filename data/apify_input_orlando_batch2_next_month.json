@@ -1,0 +1,31 @@
+{
+  "startUrls": [
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d14137481-Reviews-Home2_Suites_by_Hilton_Orlando_South_Park-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d85389-Reviews-Marriott_Orlando_Airport_Lakeside-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d87892-Reviews-Courtyard_by_Marriott_Orlando_Downtown-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d25064875-Reviews-Hyatt_House_Orlando_Airport-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d88170-Reviews-Drury_Plaza_Hotel_Orlando_Disney_Springs_Area-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d2559519-Reviews-Drury_Inn_Suites_Near_Universal_Orlando_Resort-Orlando_Florida.html"
+    },
+    {
+      "url": "https://www.tripadvisor.com/Hotel_Review-g34515-d27310254-Reviews-Pestana_Orlando_Suites_Lake_Buena_Vista-Orlando_Florida.html"
+    }
+  ],
+  "maxItemsPerQuery": 150,
+  "reviewsLanguages": [
+    "es"
+  ],
+  "disableMachineTranslations": true,
+  "scrapeReviewerInfo": false
+}
