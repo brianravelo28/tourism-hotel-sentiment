@@ -17,3 +17,4 @@ data/dataset_*
 
 # Pilot / interim NLP outputs
 data/interim/
+data/hotels.csv

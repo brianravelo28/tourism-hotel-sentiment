@@ -1,63 +1,70 @@
-# Hotel Reputation & Sentiment Dashboard — Miami/Orlando
+# Hotel Reputation Dashboard: Miami & Orlando
 
-**An end-to-end NLP pipeline that turns raw TripAdvisor reviews into a ranked, interactive
-competitor-benchmarking dashboard for the South Florida & Orlando hotel market.**
+**Do English- and Spanish-speaking hotel guests care about different things? An NLP pipeline and interactive
+dashboard built on 3,720 TripAdvisor reviews of 23 South Florida and Orlando hotels, 27% of them written in Spanish.**
 
-Scrapes guest reviews → runs multilingual zero-shot sentiment analysis and topic modeling → rolls
-everything up into a per-hotel reputation score → serves it all through a live Plotly Dash app.
+Scrapes reviews, tags every sentence with an aspect (staff, location, cleanliness, ...) and a sentiment in both
+languages, ranks hotels within their city, and tests whether the two language groups emphasize different things
+once review length and hotel choice are controlled for.
 
-## Why this exists
+## What it found
 
-Hotel operators and revenue managers care about one question their star rating alone can't answer:
-*what, specifically, are guests saying — and how does that stack up against the hotel down the street?*
-This project builds a repeatable pipeline to answer that at scale: 898 reviews across 22 hotels,
-sentiment-scored, topic-clustered, and ranked within their local competitive set.
+- **Spanish-speaking guests put more of their comments on location and less on cleanliness.** Comparing the same
+  hotels, location takes 4.0 percentage points more of Spanish comments (95% CI +1.6 to +6.5) and cleanliness
+  3.2 points less (CI -5.0 to -1.4). Cleanliness points the same way in 12 of the 13 hotels with enough Spanish reviews.
+- **Star ratings don't show it.** Both groups average 4.48 stars. The difference is in *what they write about*.
+- **Most apparent differences weren't real.** Raw mention rates suggested large gaps in staff, cleanliness,
+  amenities and food, but Spanish reviews are shorter and cluster in particular hotels. After controlling for both,
+  amenities, food and room show no reliable difference, and staff, price and noise are only suggestive.
+- **Complaints are rare and mostly about noise** (36 of 67 clear complaints). About 86% of reviews are 4-5 stars.
+- **Top-ranked hotels:** InterContinental Miami (9.11/10) in Miami and Hilton Orlando (9.05/10) in Orlando.
 
-## What it does
+The [methodology doc](docs/METHODOLOGY.md) covers how each result was graded, what was hand-validated
+(aspect tagging ~90% accurate at the threshold used), and six errors found and fixed along the way, including a
+reputation score that turned out to measure how deep each hotel was scraped.
 
-- **Scrapes** TripAdvisor reviews for a target list of hotels via Apify
-- **Sentiment-scores** every review with a multilingual zero-shot NLI model (XLM-RoBERTa-XNLI) —
-  built multilingual from the start, not translated after the fact
-- **Clusters** reviews into topics with BERTopic to surface recurring praise/complaint themes
-- **Computes** a weighted 0-10 reputation score per hotel (sentiment, star rating, review recency,
-  review volume) and ranks hotels within their city
-- **Visualizes** all of it in a 3-tab interactive dashboard: competitor ranking table, sentiment
-  trend lines, and topic frequency breakdown
+## The dashboard
 
-## Key Findings
+Four tabs, built with Plotly Dash:
 
-- 898 reviews analyzed across 22 hotels (15 Miami, 7 Orlando)
-- Sentiment skews strongly positive (812 positive / 83 negative / 3 neutral), consistent with a
-  4.6★-average dataset — and cross-validates against star rating independently (see
-  [`notebooks/eda.ipynb`](notebooks/eda.ipynb))
-- Top-ranked hotel in Miami: **Homewood Suites by Hilton Miami-Airport/Blue Lagoon** (9.50/10)
-- Top-ranked hotel in Orlando: **Holiday Inn Orlando International Dr-ICON by IHG** (9.37/10)
-- Staff service is the dominant praise driver in both markets — front-desk staff are frequently
-  called out by name in positive reviews
+- **Rankings**: hotels ranked within a city on a 0-10 reputation score, plus an aspect heatmap showing how each
+  hotel is described
+- **Hotel detail**: one hotel's aspect-by-aspect tone, filterable by review language, with real guest quotes
+  and complaints
+- **English vs Spanish**: the comparison above, with confidence intervals and an honest "how much to trust this" panel
+- **Trends**: sentiment by quarter and language
 
-## Tech Stack
+## How it works
 
-`Python` · `Transformers` (XLM-RoBERTa-XNLI) · `BERTopic` · `sentence-transformers` · `Pandas` ·
-`Plotly Dash` · `Docker` (Hugging Face Spaces deployment)
+| Step | Script | What it does |
+|---|---|---|
+| 1 | `src/parse_reviews.py` | Merge Apify exports, dedupe, label language by what the guest actually wrote |
+| 2 | `src/aspect_sentiment.py` | Split into sentences; tag aspect (multilingual embeddings) and sentiment (distilled multilingual model) |
+| 3 | `src/build_dashboard_data.py` | Quality filters, complaint definition, dashboard tables |
+| 4 | `src/reputation_scoring.py` | Per-hotel scores over a common 24-month window, aspect profiles, trends |
+| 5 | `src/language_comparison.py` | English vs Spanish shares with hotel control and bootstrap intervals |
 
-## Repo Structure
+## Tech stack
+
+`Python` · `Hugging Face Transformers` · `sentence-transformers` · `PyTorch` · `pandas` · `NumPy` ·
+`Plotly Dash` · `Docker`
+
+## Repo structure
 
 ```
-├── README.md              this file
-├── requirements.txt        full pipeline deps (torch, transformers, bertopic, ...)
+├── README.md
+├── requirements.txt        full pipeline dependencies
 ├── LICENSE                 MIT
-├── .gitignore
-├── data/                    acquisition docs + hotel URL list (raw scrapes are gitignored, not committed)
-├── src/                     pipeline: scrape parsing -> sentiment/topics -> reputation scoring
-├── notebooks/               EDA notebook, executed with output plots
-├── dashboard/                the Dash app + its own lean requirements.txt + Dockerfile
-└── docs/                    methodology, model citations, data schema + pipeline diagram
+├── data/                   scrape inputs and acquisition notes (raw exports are gitignored)
+├── src/                    the five pipeline scripts above
+├── notebooks/eda.ipynb     exploratory analysis with executed charts
+├── dashboard/              Dash app, its lean requirements.txt, Dockerfile, and the published data tables
+└── docs/                   METHODOLOGY.md, DATA_SCHEMA.md (with pipeline diagram)
 ```
 
-## Running the Dashboard
+## Run the dashboard
 
-The dashboard only needs a lean dependency set (`pandas`, `plotly`, `dash`, `gunicorn`) — it reads
-the already-generated CSVs in `dashboard/data/` rather than re-running the ML pipeline.
+The dashboard reads the pre-built tables in `dashboard/data/`, so it needs only a small dependency set:
 
 ```bash
 cd dashboard
@@ -65,36 +72,32 @@ pip install -r requirements.txt
 python app.py
 ```
 
-Then open `http://localhost:7860`.
+Then open http://localhost:7860.
 
-## Regenerating the Data Pipeline
+## Rebuild the data
 
-Requires the full `requirements.txt` at the repo root (`torch`, `transformers`, `bertopic`, ...).
+Needs the full `requirements.txt` and the raw Apify exports in `data/` (see [`data/README.md`](data/README.md)).
 
 ```bash
 pip install -r requirements.txt
-python src/parse_reviews.py         # data/raw_reviews.json -> data/raw_reviews.csv
-python src/sentiment_topics.py      # -> dashboard/data/processed_reviews.csv
-python src/reputation_scoring.py    # -> dashboard/data/reputation_scores.csv, sentiment_trends.csv
+python src/parse_reviews.py
+python src/aspect_sentiment.py       # ~25 min for 3,700 reviews on CPU
+python src/build_dashboard_data.py
+python src/reputation_scoring.py
+python src/language_comparison.py
 ```
-
-See [`data/README.md`](data/README.md) for how to reproduce the raw scrape itself.
-
-## Methodology & Data
-
-- [`docs/METHODOLOGY.md`](docs/METHODOLOGY.md) — model choices, the reputation score formula, model
-  citations, and two real correctness bugs caught and fixed during development
-- [`docs/DATA_SCHEMA.md`](docs/DATA_SCHEMA.md) — table schemas and a pipeline flow diagram
-- [`notebooks/eda.ipynb`](notebooks/eda.ipynb) — exploratory analysis with plots
 
 ## Limitations
 
-- **Language coverage:** the current dataset is ~99.9% English. A Spanish-language data refresh is
-  planned to enable the originally-scoped bilingual comparison of guest priorities.
-- **Orlando sample size:** only 7 of 15 targeted Orlando hotels returned reviews from the scraper
-  (vs. 15/15 for Miami) — the Orlando ranking should be read as preliminary until the dataset is
-  expanded. Full detail in [`data/README.md`](data/README.md#coverage-note).
+- **Orlando is partial:** 8 of 15 targeted Orlando hotels are in (7 more are queued for the next scrape), and
+  Spanish coverage is thinner there (234 reviews vs 782 in Miami).
+- **Shows what differs, not why.** Trip type (family, business) is not yet controlled for.
+- **Complaints are scarce**, so per-hotel complaint lists are short.
+- **Aspect and sentiment labels are machine-generated.** The hand check behind the accuracy figures was done by the
+  AI assistant that helped build this, not independent annotators.
+
+More in [docs/METHODOLOGY.md](docs/METHODOLOGY.md#limitations).
 
 ## License
 
-MIT — see [LICENSE](LICENSE).
+MIT, see [LICENSE](LICENSE).

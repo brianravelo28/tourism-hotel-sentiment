@@ -10,6 +10,7 @@ data_path = Path(__file__).parent.parent / 'data'
 # de-duplicating on TripAdvisor review id so overlapping runs don't double-count.
 json_files = [data_path / 'raw_reviews.json'] + sorted(data_path.glob('dataset_*.json'))
 by_id = {}
+hotel_meta = {}   # latest TripAdvisor-reported totals per hotel (later exports overwrite earlier ones)
 for json_file in json_files:
     if not json_file.exists():
         continue
@@ -18,6 +19,10 @@ for json_file in json_files:
     print(f"{json_file.name}: {len(batch)} reviews")
     for review in batch:
         by_id[review['id']] = review
+        place = review.get('placeInfo', {})
+        hotel_meta[review.get('locationId')] = {
+            'hotel_id': review.get('locationId'), 'hotel_name': place.get('name'),
+            'ta_review_count': place.get('numberOfReviews'), 'ta_rating': place.get('rating')}
 reviews = list(by_id.values())
 
 print(f"Loaded {len(reviews)} unique reviews from {len(json_files)} exports")
@@ -81,3 +86,7 @@ output_file = data_path / 'raw_reviews.csv'
 df.to_csv(output_file, index=False, encoding='utf-8')
 print(f"\nSaved to: {output_file}")
 print(f"Shape: {df.shape}")
+
+# Hotel-level metadata (TripAdvisor's own review totals) - used for the volume component of the reputation score
+pd.DataFrame(hotel_meta.values()).to_csv(data_path / 'hotels.csv', index=False, encoding='utf-8')
+print(f"Saved hotel metadata for {len(hotel_meta)} hotels to {data_path / 'hotels.csv'}")

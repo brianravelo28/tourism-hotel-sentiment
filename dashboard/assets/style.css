@@ -1,0 +1,43 @@
+:root { --ink:#1a202c; --muted:#5a6779; --line:#e2e8f0; --bg:#f7f9fc; --card:#fff; --accent:#2b6cb0; }
+body { font-size:15px; margin:0; background:var(--bg); color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; }
+.page { max-width:1180px; margin:0 auto; padding:0 20px 40px; }
+.header { padding:28px 0 12px; }
+.header h1 { margin:0; font-size:28px; font-weight:700; letter-spacing:-0.01em; }
+.subtitle { margin:4px 0 18px; color:var(--muted); font-size:15px; }
+.kpis { display:grid; grid-template-columns:repeat(auto-fit,minmax(190px,1fr)); gap:12px; margin:0 0 6px; }
+.kpi { background:var(--card); border:1px solid var(--line); border-radius:10px; padding:12px 16px; }
+.kpi-label { font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+.kpi-value { font-size:26px; font-weight:700; margin-top:2px; }
+.kpi-sub { font-size:15px; color:var(--muted); min-height:16px; }
+.content { background:var(--card); border:1px solid var(--line); border-top:none; border-radius:0 0 10px 10px; padding:22px 24px 28px; }
+.content h3 { margin:26px 0 4px; font-size:17px; }
+.controls { display:flex; gap:24px; align-items:flex-end; margin-bottom:14px; }
+.controls label { display:block; font-size:15px; color:var(--muted); margin-bottom:4px; }
+.controls input[type=radio] { margin:0 4px 0 12px; }
+.note { color:var(--muted); font-size:15px; margin:4px 0 12px; }
+.lead { font-size:16.5px; line-height:1.5; margin:6px 0; }
+.callout { background:#ebf4ff; border-left:4px solid var(--accent); border-radius:6px; padding:6px 18px 10px; margin-bottom:8px; }
+.callout h3 { margin-top:12px; }
+.bullets li { margin:6px 0; color:#2d3748; font-size:15px; line-height:1.45; }
+.cols { display:flex; gap:28px; flex-wrap:wrap; }
+.col { flex:1; min-width:300px; }
+.quotes { list-style:none; padding:0; margin:8px 0; }
+.quotes li { padding:9px 0; border-bottom:1px solid var(--line); font-size:15px; line-height:1.4; }
+.tag { display:block; margin-top:2px; font-size:15px; color:var(--muted); text-transform:capitalize; }
+.footer { margin-top:16px; font-size:15px; color:var(--muted); }
+.tab { font-weight:600 !important; }
+
+.rank-split { display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }
+.rank-table-col { flex:1 1 600px; min-width:0; }
+.hotel-card { flex:1 1 300px; min-width:280px; background:#f8fafc; border:1px solid var(--line); border-radius:10px; padding:16px 18px; }
+.hotel-card h4 { margin:14px 0 2px; font-size:15px; text-transform:uppercase; letter-spacing:.05em; color:var(--muted); }
+.hotel-card .bullets { margin:4px 0; padding-left:18px; }
+.hotel-card .quotes li { border-bottom:none; padding:6px 0; }
+
+/* Nothing on the page below 15px, including Dash's own widgets */
+.dash-dropdown, .dash-dropdown-value, .dash-dropdown-option, .dash-dropdown-search, .controls label,
+.controls input, .Select, .tab, .dash-table-container, .dash-spreadsheet-container { font-size:15px; }
+.kpi-label { letter-spacing:.03em; }
+
+/* Dash adds a "Toggle Columns" control because the table has a hidden helper column; users do not need it */
+.show-hide { display:none !important; }

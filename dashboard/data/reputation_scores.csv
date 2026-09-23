@@ -1,23 +1,24 @@
-hotel_id,hotel_name,city,reputation_score,competitor_rank,avg_sentiment,review_count,en_count,es_count,top_complaints,top_praise
-217397,Homewood Suites by Hilton Miami-Airport/Blue Lagoon,Miami,9.49,1,0.9523341262340546,50,50,0,,jorge; hotel; service
-85029,Intercontinental Miami By IHG,Miami,9.26,2,0.904662336013755,49,48,1,hotel,service; hotel
-1149365,Kimpton Epic Hotel by IHG,Miami,9.25,3,0.916599414786514,49,49,0,hotel,hotel; jorge; service
-85031,Miami Marriott Biscayne Bay,Miami,9.21,4,0.9101419997215271,50,50,0,hotel,service; hotel
-87115,Sonesta Miami Airport,Miami,9.08,5,0.9376492142677307,20,20,0,,service; hotel; jasmine
-25150899,The Elser Hotel Miami,Miami,9.03,6,0.9070469462871551,50,50,0,hotel,hotel; manuel; service
-288592,"Brickell Arch, A Luxury Collection Hotel, Miami",Miami,8.93,7,0.8964755600690841,50,50,0,hotel,service; hotel; david
-10673726,Hampton Inn & Suites Miami Wynwood Design District,Miami,8.92,8,0.9112164521217346,50,50,0,hotel; service,hotel; service; jasmine
-2253238,Hampton Inn & Suites By Hilton Miami Brickell Downtown,Miami,8.89,9,0.8356030344963074,50,50,0,hotel,hotel; service
-6727321,The Vagabond Hotel Miami,Miami,8.82,10,0.849401982463136,49,49,0,hotel,hotel; service; jorge
-24889567,Arlo Wynwood,Miami,8.8,11,0.9294680476188659,20,20,0,hotel,hotel; service
-217395,Mayfair House Hotel & Garden,Miami,8.78,12,0.869907414317131,50,50,0,hotel,service; hotel; david
-15089284,Hyde Midtown Miami,Miami,8.41,13,0.8507737350463868,50,50,0,hotel,hotel; service; shaun
-15809999,Mr. C Miami Coconut Grove,Miami,8.21,14,0.8561525046825409,40,40,0,hotel,hotel; service
-235516,AC Hotel Miami Wynwood,Miami,7.92,15,0.8791950392723084,50,50,0,hotel,hotel; service; jasmine
-25222291,Holiday Inn Orlando International Dr-ICON by IHG,Orlando,9.36,1,0.928681583404541,50,50,0,,shaun; hotel; jasmine
-85329,Castle Hotel Autograph Collection,Orlando,9.29,2,0.957075622677803,20,20,0,,service; hotel
-1308392,Signia By Hilton Orlando - An Official Walt Disney WorldR Hotel,Orlando,9.24,3,0.9039140433073044,50,50,0,hotel,service; jasmine; hotel
-120210,The Florida Hotel & Conference Center,Orlando,9.2,4,0.9402684360742569,20,20,0,,hotel; service
-12451425,Universal Aventura Hotel,Orlando,7.73,5,0.7211597902434213,49,49,0,hotel,hotel; service
-85401,Rosen Inn at Pointe Orlando,Orlando,7.24,6,0.7105833023786545,20,20,0,hotel,hotel
-3932244,Universal Cabana Bay Beach Resort,Orlando,7.2,7,0.7460557669401169,12,12,0,hotel,hotel
+hotel_id,hotel_name,city,reputation_score,competitor_rank,avg_sentiment,avg_rating,review_count,en_count,es_count,other_count,reviews_analyzed_total,ta_review_count,ta_rating,recency_factor,volume_factor,top_praise,top_complaints
+85029,Intercontinental Miami By IHG,Miami,9.11,1,0.81,4.8,144,67,76,1,144,9930,4.5,9.99,9.98,staff; amenities; room,noise
+1149365,Kimpton Epic Hotel by IHG,Miami,8.96,2,0.819,4.85,142,73,67,2,142,5234,4.4,9.9,8.59,staff; amenities; location,
+85031,Miami Marriott Biscayne Bay,Miami,8.82,3,0.822,4.61,115,86,28,1,247,5209,4.3,9.86,8.58,location; staff; food,noise; food
+217397,Homewood Suites by Hilton Miami-Airport/Blue Lagoon,Miami,8.78,4,0.818,4.89,97,81,16,0,142,2699,4.1,9.99,7.16,staff; food; location,
+2253238,Hampton Inn & Suites By Hilton Miami Brickell Downtown,Miami,8.6,5,0.754,4.65,104,79,20,5,242,5269,4.7,9.97,8.61,staff; amenities; location,food; noise
+87115,Sonesta Miami Airport,Miami,8.53,6,0.793,4.72,72,57,15,0,166,2568,4.2,9.75,7.05,location; staff; food,
+288592,"Brickell Arch, A Luxury Collection Hotel, Miami",Miami,8.49,7,0.768,4.59,96,73,22,1,182,4301,4.4,9.58,8.17,location; staff; room,
+25150899,The Elser Hotel Miami,Miami,8.37,8,0.806,4.58,149,83,65,1,195,1626,4.6,9.92,6.06,staff; amenities; location,
+10673726,Hampton Inn & Suites Miami Wynwood Design District,Miami,8.02,9,0.77,4.52,75,69,5,1,178,1090,4.6,9.67,5.19,staff; location; amenities,
+217395,Mayfair House Hotel & Garden,Miami,7.93,10,0.748,4.65,88,81,6,1,134,756,4.6,9.9,4.39,staff; location; amenities,noise
+6727321,The Vagabond Hotel Miami,Miami,7.93,10,0.755,4.72,80,76,1,3,188,717,4.6,9.53,4.28,staff; amenities; location,
+24889567,Arlo Wynwood,Miami,7.68,12,0.756,4.65,60,50,9,1,102,312,4.6,9.96,2.47,staff; amenities; food,noise
+15089284,Hyde Midtown Miami,Miami,7.53,13,0.734,4.6,63,52,5,6,167,399,4.7,9.25,3.0,amenities; staff; food,
+15809999,Mr. C Miami Coconut Grove,Miami,7.49,14,0.724,4.4,40,38,0,2,40,629,4.4,9.0,3.99,staff; room; location,noise
+235516,AC Hotel Miami Wynwood,Miami,7.15,15,0.678,4.34,38,31,2,5,128,302,4.6,9.82,2.4,staff; location; amenities,noise
+1382900,Hilton Orlando,Orlando,9.05,1,0.798,4.88,50,42,8,0,150,8204,4.5,9.95,9.57,staff; cleanliness; amenities,
+120210,The Florida Hotel & Conference Center,Orlando,9.03,2,0.805,4.88,60,55,5,0,164,8186,4.6,9.66,9.57,staff; amenities; food,
+1308392,Signia By Hilton Orlando - An Official Walt Disney WorldR Hotel,Orlando,8.92,3,0.795,4.69,89,88,1,0,198,9290,4.5,9.67,9.84,food; staff; amenities,
+85329,Castle Hotel Autograph Collection,Orlando,8.54,4,0.809,4.74,68,57,11,0,167,1906,4.4,10.0,6.4,amenities; food; staff,
+25222291,Holiday Inn Orlando International Dr-ICON by IHG,Orlando,8.22,5,0.825,4.84,108,88,19,1,135,540,4.8,9.78,3.66,food; staff; location,
+12451425,Universal Aventura Hotel,Orlando,7.57,6,0.643,4.09,74,70,1,3,183,2832,4.3,9.7,7.26,staff; location; amenities,noise
+3932244,Universal Cabana Bay Beach Resort,Orlando,7.5,7,0.596,3.55,67,52,15,0,160,24988,4.2,9.92,10.0,staff; amenities; location,noise; price; room
+85401,Rosen Inn at Pointe Orlando,Orlando,7.33,8,0.571,3.48,60,59,1,0,166,10057,4.0,9.67,10.0,staff; location; price,noise; cleanliness; staff

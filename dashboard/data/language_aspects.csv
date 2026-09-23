@@ -1,0 +1,9 @@
+aspect,en_share,en_share_hotel_adjusted,es_share,raw_diff,adjusted_diff,ci_low,ci_high,reliable,hotels_same_direction,hotels_compared,evidence,en_reviews,es_reviews,en_tagged,es_tagged
+location,0.1226,0.128,0.1678,0.0452,0.0398,0.0157,0.065,True,10,13,robust,2670,1016,4112,1168
+food,0.1513,0.1686,0.1832,0.032,0.0146,-0.0111,0.04,False,8,13,none,2670,1016,4112,1168
+price,0.0114,0.0109,0.024,0.0125,0.013,0.0035,0.0226,True,7,13,suggestive,2670,1016,4112,1168
+room,0.1984,0.2045,0.208,0.0096,0.0035,-0.0213,0.03,False,6,13,none,2670,1016,4112,1168
+amenities,0.1637,0.1309,0.1284,-0.0352,-0.0024,-0.0246,0.02,False,7,13,none,2670,1016,4112,1168
+noise,0.0156,0.014,0.006,-0.0096,-0.008,-0.0154,-0.001,True,7,13,suggestive,2670,1016,4112,1168
+staff,0.2461,0.2532,0.2243,-0.0218,-0.0289,-0.0572,-0.0002,True,10,13,suggestive,2670,1016,4112,1168
+cleanliness,0.091,0.0898,0.0582,-0.0327,-0.0316,-0.0497,-0.0141,True,12,13,robust,2670,1016,4112,1168

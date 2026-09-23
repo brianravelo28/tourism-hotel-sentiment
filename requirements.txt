@@ -1,10 +1,11 @@
+# Full pipeline (src/): parsing, aspect sentiment, scoring, language comparison
 pandas
 numpy
 torch
 transformers
-bertopic
-scikit-learn
-plotly
 sentence-transformers
 sentencepiece
 protobuf
+# Notebook (notebooks/eda.ipynb)
+matplotlib
+jupyter

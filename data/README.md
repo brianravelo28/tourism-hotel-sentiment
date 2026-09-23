@@ -15,19 +15,18 @@ is **not** committed to this repository (see below) — only the derived, PII-fr
 
 ## Coverage note
 
-`hotel_urls.txt` lists 30 target hotels (15 Miami, 15 Orlando). The scrape run used to build the current
-committed dataset returned reviews for **22 of the 30** (15 Miami, 7 Orlando) — the remaining 8 URLs,
-mostly Orlando, returned zero reviews, likely due to Apify free-tier scrape limits. See the
-[Limitations section of the root README](../README.md#limitations) for how this affects the Orlando
-ranking's reliability. A follow-up scrape with a paid Apify plan is planned to close this gap and to add
-Spanish-language coverage (the current dataset is ~99.9% English).
+`hotel_urls.txt` lists 30 target hotels (15 Miami, 15 Orlando). The published dataset covers **23** of them
+(15 Miami, 8 Orlando). The first scrape hit the Apify free-tier limit and returned nothing for 8 Orlando hotels;
+a later run with more credit recovered one (Hilton Orlando) and deepened the rest. The 7 remaining Orlando hotels
+are in `apify_input_orlando_batch2_next_month.json`. Orlando therefore has a smaller sample than Miami, which the
+[README](../README.md#limitations) and the dashboard note.
 
 ## Why raw data isn't committed
 
 `raw_reviews.json` and `raw_reviews.csv` are excluded via `.gitignore` because the raw Apify export
 includes reviewer PII (names, usernames, profile links, avatar images) scraped from public TripAdvisor
 pages. The pipeline strips all of that out by the time data reaches `processed_reviews.csv` — only
-`review_id`, `hotel_id`, review text/rating/date, and derived sentiment/topic fields survive. Those
+`review_id`, `hotel_id`, review text/rating/date, and derived sentiment and aspect fields survive. Those
 derived files are small and PII-free, so they're committed under `/dashboard/data`.
 
 ## Apify input files
