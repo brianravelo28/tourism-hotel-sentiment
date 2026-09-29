@@ -49,6 +49,13 @@ def healthz():
     return 'ok'
 
 
+CHART_HINT = 'Drag to zoom into part of the chart; double-click the chart to reset the view.'
+
+
+def chart_hint():
+    return html.P(CHART_HINT, className='chart-hint')
+
+
 def kpi(label, value, sub=None):
     return html.Div([html.Div(label, className='kpi-label'), html.Div(value, className='kpi-value'),
                      html.Div(sub or '', className='kpi-sub')], className='kpi')
@@ -56,7 +63,7 @@ def kpi(label, value, sub=None):
 
 app.layout = html.Div([
     html.Div([
-        html.H1('Hotel Reputation Dashboard'),
+        html.H1(['Hotel Reputation Dashboard', html.Span('*', className='title-star')]),
         html.P('Miami & Orlando hotels, from TripAdvisor guest reviews written in English and Spanish', className='subtitle'),
         html.Div([
             kpi('Reviews analyzed', f'{n_reviews:,}', f'{date_min:%b %Y} - {date_max:%b %Y}'),
@@ -64,10 +71,11 @@ app.layout = html.Div([
             kpi('English', f'{en_pct_all:.0f}%', f'{(rev.language == "en").sum():,} reviews'),
             kpi('Spanish', f'{es_pct_all:.0f}%', f'{(rev.language == "es").sum():,} reviews'),
         ], className='kpis'),
+        html.P('*An active project, more data to come', className='ongoing-note'),
     ], className='header'),
     dcc.Tabs(id='tabs', value='rank', children=[
         dcc.Tab(label='Rankings', value='rank'),
-        dcc.Tab(label='Hotel detail', value='detail'),
+        dcc.Tab(label='Hotel Detail', value='detail'),
         dcc.Tab(label='English vs Spanish', value='lang'),
         dcc.Tab(label='Trends', value='trends'),
     ]),
@@ -88,7 +96,7 @@ def tab_rank():
         html.Div([
             html.Label('City'),
             dcc.Dropdown(id='city', options=[{'label': c, 'value': c} for c in cities], value=cities[0],
-                         clearable=False, style={'width': '220px'}),
+                         clearable=False, searchable=False, style={'width': '220px'}),
         ], className='controls'),
         html.P(f'Score = 40% guest sentiment, 30% star rating, 15% recency, 15% TripAdvisor review volume, computed on '
                f'reviews from the last {score_window} months so every hotel is compared over the same period. '
@@ -109,9 +117,10 @@ def tab_rank():
                                 'es_pct': 'Share of those reviews written in Spanish'},
                 sort_action='native', page_size=20,
                 style_table={'overflowX': 'auto', 'width': '100%'},
-                style_cell={'textAlign': 'left', 'padding': '8px 10px', 'fontFamily': 'inherit', 'fontSize': '15px',
+                style_cell={'textAlign': 'left', 'padding': '8px 10px', 'fontFamily': "'Sora', sans-serif", 'fontSize': '15px',
                             'whiteSpace': 'normal', 'height': 'auto', 'cursor': 'pointer'},
-                style_header={'fontWeight': '600', 'backgroundColor': '#f1f5f9', 'border': 'none', 'whiteSpace': 'nowrap'},
+                style_header={'fontWeight': '600', 'backgroundColor': '#f1f5f9', 'border': 'none', 'whiteSpace': 'nowrap',
+                              'fontFamily': "'Sora', sans-serif"},
                 style_data={'border': 'none', 'borderBottom': '1px solid #e2e8f0'},
                 style_cell_conditional=[
                     {'if': {'column_id': cid}, 'width': f'{w}px', 'minWidth': f'{w}px', 'maxWidth': f'{w}px'}
@@ -124,6 +133,7 @@ def tab_rank():
         html.P(f'Average sentence sentiment (0 = negative, 1 = positive) for each aspect guests wrote about. '
                f'Blank cells have fewer than {MIN_HEATMAP_MENTIONS} mentions.', className='note'),
         dcc.Graph(id='heatmap', config={'displayModeBar': False}),
+        chart_hint(),
     ])
 
 
@@ -201,8 +211,8 @@ def update_heatmap(city):
         hovertemplate='%{y}<br>%{x}: %{z:.2f} (%{customdata:.0f} mentions)<extra></extra>',
         colorbar=dict(title='Sentiment', thickness=12), xgap=2, ygap=2))
     fig.update_yaxes(autorange='reversed')
-    fig.update_xaxes(side='top')
-    fig.update_layout(height=120 + 34 * len(hotels), **{**TEMPLATE, 'margin': dict(l=10, r=10, t=60, b=10)})
+    fig.update_xaxes(side='top', tickangle=0, automargin=True)
+    fig.update_layout(height=150 + 34 * len(hotels), **{**TEMPLATE, 'margin': dict(l=10, r=10, t=90, b=10)})
     return fig
 
 
@@ -210,21 +220,22 @@ def update_heatmap(city):
 # Tab 2: Hotel detail
 # ============================================================
 def tab_detail():
-    options = [{'label': f'{r.hotel_name} ({r.city}, #{r.competitor_rank})', 'value': int(r.hotel_id)}
+    options = [{'label': f'{r.hotel_name} ({r.city} #{r.competitor_rank})', 'value': int(r.hotel_id)}
                for r in rep.sort_values(['city', 'competitor_rank']).itertuples()]
     return html.Div([
         html.Div([
             html.Div([html.Label('Hotel'), dcc.Dropdown(id='hotel', options=options, value=options[0]['value'],
                                                         clearable=False)], style={'flex': '2'}),
-            html.Div([html.Label('Review language'), dcc.RadioItems(
+            html.Div([html.Label('Review Language'), dcc.RadioItems(
                 id='lang-filter', value='all', inline=True,
                 options=[{'label': 'All', 'value': 'all'}, {'label': 'English', 'value': 'en'},
-                         {'label': 'Spanish', 'value': 'es'}])], style={'flex': '1'}),
+                         {'label': 'Spanish', 'value': 'es'}])], className='lang-filter-block', style={'flex': '1'}),
         ], className='controls'),
         html.Div(id='hotel-kpis', className='kpis'),
         html.H3('What guests say, by aspect'),
         html.P('Each bar is every sentence in which guests mention that aspect, split by tone.', className='note'),
         dcc.Graph(id='hotel-aspects', config={'displayModeBar': False}),
+        chart_hint(),
         html.Div([
             html.Div([html.H3('Most positive comments'), html.Div(id='quotes-pos')], className='col'),
             html.Div([html.H3('Complaints'), html.P('Clearly negative comments, mostly from reviews rated 3 stars or lower.', className='note'), html.Div(id='quotes-neg')], className='col'),
@@ -242,16 +253,35 @@ def quotes(df, ascending, n=4):
                     for r in d.itertuples()], className='quotes')
 
 
+REF_DATE = rev.published_date.max()
+WINDOW_START = REF_DATE - pd.DateOffset(months=score_window)
+
+
 @app.callback(Output('hotel-kpis', 'children'), Output('hotel-aspects', 'figure'),
               Output('quotes-pos', 'children'), Output('quotes-neg', 'children'),
               Input('hotel', 'value'), Input('lang-filter', 'value'))
 def update_detail(hotel_id, lang_filter):
     r = rep[rep.hotel_id == hotel_id].iloc[0]
     city_n = (rep.city == r.city).sum()
-    kpis = [kpi('Reputation score', f'{r.reputation_score:.2f}', f'#{r.competitor_rank} of {city_n} in {r.city}'),
-            kpi('TripAdvisor rating', f'{r.ta_rating:.1f}', f'{int(r.ta_review_count):,} reviews on TripAdvisor'),
-            kpi('Reviews analyzed', f'{int(r.reviews_analyzed_total):,}', f'{int(r.es_count)} Spanish in the last {score_window} months'),
-            kpi('Avg. sentiment', f'{r.avg_sentiment:.2f}', 'last 24 months, 0 to 1')]
+
+    # KPIs are recomputed for the selected language filter (rather than always showing the all-language figures),
+    # using the same 24-month window and score formula as src/reputation_scoring.py. Some hotels have very few
+    # Spanish reviews yet, so the Spanish-only figures can look thin until more data is scraped.
+    hotel_reviews = rev[rev.hotel_id == hotel_id]
+    if lang_filter != 'all':
+        hotel_reviews = hotel_reviews[hotel_reviews.language == lang_filter]
+    windowed = hotel_reviews[hotel_reviews.published_date >= WINDOW_START]
+    n_total, n_window = len(hotel_reviews), len(windowed)
+    avg_sentiment_f = windowed.sentiment_score.mean() if n_window else float('nan')
+    avg_rating_f = windowed.rating.mean() if n_window else float('nan')
+    score_f = (0.40 * avg_sentiment_f * 10 + 0.30 * (avg_rating_f / 5 * 10)
+               + 0.15 * r.recency_factor + 0.15 * r.volume_factor) if n_window else float('nan')
+    fmt = lambda v, spec: format(v, spec) if pd.notna(v) else 'n/a'
+    kpis = [kpi('Reputation score', fmt(score_f, '.2f'), f'#{r.competitor_rank} of {city_n} in {r.city}'),
+            kpi('Avg. star rating', fmt(avg_rating_f, '.2f'),
+                f'{r.ta_rating:.1f} overall on TripAdvisor ({int(r.ta_review_count):,} reviews)'),
+            kpi('Reviews analyzed', f'{n_total:,}', f'{n_window} in the last {score_window} months'),
+            kpi('Avg. sentiment', fmt(avg_sentiment_f, '.2f'), 'last 24 months, 0 to 1')]
     m = ment[ment.hotel_id == hotel_id]
     if lang_filter != 'all':
         m = m[m.language == lang_filter]
@@ -261,10 +291,11 @@ def update_detail(hotel_id, lang_filter):
         t = t.reindex([a for a in ASPECT_ORDER if a in t.index])
         t = t[t.sum(1) >= 3]   # a bar built from 1-2 sentences says nothing
         pct = t.div(t.sum(1), axis=0) * 100
-        labels = [f'{a.capitalize()} (n={int(t.loc[a].sum())})' for a in t.index]
+        labels = [f'{a.capitalize()} ({int(t.loc[a].sum())})' for a in t.index]
+        aspect_names = [a.capitalize() for a in t.index]
         for col, name, color in (('pos', 'Positive', POS), ('neu', 'Neutral', NEU), ('neg', 'Negative', NEG)):
-            fig.add_bar(y=labels, x=pct[col], name=name, orientation='h', marker_color=color,
-                        hovertemplate='%{y}: %{x:.0f}% ' + name.lower() + '<extra></extra>')
+            fig.add_bar(y=labels, x=pct[col], name=name, orientation='h', marker_color=color, customdata=aspect_names,
+                        hovertemplate='%{customdata}: %{x:.0f}% ' + name.lower() + '<extra></extra>')
         fig.update_layout(barmode='stack', xaxis=dict(range=[0, 100], ticksuffix='%'), yaxis=dict(autorange='reversed'),
                           height=90 + 38 * len(t), legend=dict(orientation='h', y=1.12), **TEMPLATE)
     else:
@@ -279,7 +310,7 @@ def tab_lang():
     L = lang.copy()
     n_en, n_es = int(L.en_reviews.iloc[0]), int(L.es_reviews.iloc[0])
     k = int(L.hotels_compared.iloc[0])
-    pts = lambda v: f'{v * 100:+.1f} pts'
+    pts = lambda v: f'{v * 100:+.2f} pts'
 
     def phrase(rows):
         return ', '.join(f'{r.aspect} ({pts(r.adjusted_diff)})' for r in rows.itertuples())
@@ -302,7 +333,7 @@ def tab_lang():
             marker=dict(color=EVIDENCE_COLOR[ev], size=12),
             error_x=dict(type='data', symmetric=False, array=(d.ci_high - d.adjusted_diff) * 100,
                          arrayminus=(d.adjusted_diff - d.ci_low) * 100, color=EVIDENCE_COLOR[ev], thickness=2),
-            hovertemplate='%{y}: %{x:+.1f} pts<extra></extra>'))
+            hovertemplate='%{y}: %{x:+.2f} pts<extra></extra>'))
     fig_diff.add_vline(x=0, line_width=1, line_color='#718096')
     fig_diff.update_layout(height=380, xaxis=dict(title='Spanish share minus English share (percentage points)', zeroline=False),
                            yaxis=dict(categoryorder='array', categoryarray=[a.capitalize() for a in L.sort_values('adjusted_diff').aspect],
@@ -323,9 +354,11 @@ def tab_lang():
         html.P(f'Bars are 95% confidence intervals. The English share is re-weighted to the hotels Spanish-speaking '
                f'guests actually stayed at, so this is not just "which hotels each group visits".', className='note'),
         dcc.Graph(figure=fig_diff, config={'displayModeBar': False}),
+        chart_hint(),
         html.H3('Where the comments go'),
         html.P('Each language sums to 100%. English is shown re-weighted to the Spanish hotel mix.', className='note'),
         dcc.Graph(figure=fig_share, config={'displayModeBar': False}),
+        chart_hint(),
         html.H3('How much to trust this'),
         html.Ul([
             html.Li(f'{n_en:,} English and {n_es:,} Spanish reviews. Spanish reviews are shorter, so the comparison uses '
@@ -344,11 +377,15 @@ def tab_lang():
 # ============================================================
 def tab_trends():
     return html.Div([
-        html.Div([html.Label('City'), dcc.Dropdown(id='trend-city', options=[{'label': 'Both cities', 'value': 'all'}] +
+        html.Div([html.Label('City'), dcc.Dropdown(id='trend-city', options=[{'label': 'Both', 'value': 'all'}] +
                                                    [{'label': c, 'value': c} for c in cities], value='all',
-                                                   clearable=False, style={'width': '220px'})], className='controls'),
+                                                   clearable=False, searchable=False, style={'width': '220px'})], className='controls'),
         html.P('Average review sentiment by quarter and language. Quarters with fewer than 15 reviews are hidden.', className='note'),
+        html.P('Orlando\'s Spanish line currently only clears that 15-review threshold in two quarters '
+               '(2021 Q4 and 2023 Q1), so it shows as one short, isolated segment rather than a real trend — '
+               'that will fill in as more Orlando reviews are scraped.', className='note'),
         dcc.Graph(id='trend-chart', config={'displayModeBar': False}),
+        chart_hint(),
     ])
 
 
@@ -373,7 +410,7 @@ def update_trends(city):
     fig.update_xaxes(type='multicategory', tickangle=0, showdividers=True, dividercolor='#cbd5e0', dividerwidth=1,
                      automargin=True)
     fig.update_layout(height=430, yaxis=dict(title='Average sentiment (0-1)', range=[0.4, 1]),
-                      legend=dict(orientation='h', y=1.1), **TEMPLATE)
+                      legend=dict(orientation='h', x=0.5, xanchor='center', y=1.12, font=dict(size=17)), **TEMPLATE)
     return fig
 
 

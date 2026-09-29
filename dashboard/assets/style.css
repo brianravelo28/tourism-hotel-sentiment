@@ -1,3 +1,5 @@
+@import url('https://fonts.googleapis.com/css2?family=Sora:wght@400;600;700&display=swap');
+
 :root { --ink:#1a202c; --muted:#5a6779; --line:#e2e8f0; --bg:#f7f9fc; --card:#fff; --accent:#2b6cb0; }
 body { font-size:15px; margin:0; background:var(--bg); color:var(--ink); font-family:Inter,"Segoe UI",Arial,sans-serif; }
 .page { max-width:1180px; margin:0 auto; padding:0 20px 40px; }
@@ -26,6 +28,10 @@ body { font-size:15px; margin:0; background:var(--bg); color:var(--ink); font-fa
 .tag { display:block; margin-top:2px; font-size:15px; color:var(--muted); text-transform:capitalize; }
 .footer { margin-top:16px; font-size:15px; color:var(--muted); }
 .tab { font-weight:600 !important; }
+.title-star { color:var(--accent); margin-left:2px; }
+.ongoing-note { margin:6px 0 0; color:var(--muted); font-size:15px; font-style:italic; }
+.chart-hint { margin:2px 0 20px; color:#8a94a3; font-size:15px; font-style:italic; }
+.lang-filter-block { display:flex; flex-direction:column; align-items:center; }
 
 .rank-split { display:flex; gap:24px; align-items:flex-start; flex-wrap:wrap; }
 .rank-table-col { flex:1 1 600px; min-width:0; }
@@ -38,6 +44,11 @@ body { font-size:15px; margin:0; background:var(--bg); color:var(--ink); font-fa
 .dash-dropdown, .dash-dropdown-value, .dash-dropdown-option, .dash-dropdown-search, .controls label,
 .controls input, .Select, .tab, .dash-table-container, .dash-spreadsheet-container { font-size:15px; }
 .kpi-label { letter-spacing:.03em; }
+
+/* The rankings table gets its own display font (Sora) instead of the body font, per request */
+#rank-table, #rank-table .dash-cell, #rank-table .dash-header, #rank-table .dash-cell-value {
+  font-family:'Sora', 'Inter', sans-serif;
+}
 
 /* Dash adds a "Toggle Columns" control because the table has a hidden helper column; users do not need it */
 .show-hide { display:none !important; }
