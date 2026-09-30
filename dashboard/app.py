@@ -49,7 +49,8 @@ def healthz():
     return 'ok'
 
 
-CHART_HINT = 'Drag to zoom into part of the chart; double-click the chart to reset the view.'
+CHART_HINT = ('Drag to zoom into part of the chart; double-click the chart to reset the view. '
+              'Click a legend entry to hide that series; double-click it to isolate it.')
 
 
 def chart_hint():
