@@ -30,10 +30,10 @@ reputation score that turned out to measure how deep each hotel was scraped.
 
 Four tabs, built with Plotly Dash:
 
-- **Rankings**: hotels ranked within a city on a 0-10 reputation score, plus an aspect heatmap showing how each
-  hotel is described
-- **Hotel detail**: one hotel's aspect-by-aspect tone, filterable by review language, with real guest quotes
-  and complaints
+- **Rankings**: hotels ranked within a city on a 0-10 reputation score. Click a hotel to see a card with its
+  strengths, complaints and a guest quote, and an aspect heatmap below shows how every hotel is described
+- **Hotel Detail**: one hotel's aspect-by-aspect tone with real guest quotes and complaints, filterable by review
+  language. The score, rating and sentiment figures recompute for the language you pick
 - **English vs Spanish**: the comparison above, with confidence intervals and an honest "how much to trust this" panel
 - **Trends**: sentiment by quarter and language
 
@@ -50,7 +50,7 @@ Four tabs, built with Plotly Dash:
 ## Tech stack
 
 `Python` · `Hugging Face Transformers` · `sentence-transformers` · `PyTorch` · `pandas` · `NumPy` ·
-`Plotly Dash` · `Docker`
+`Plotly Dash` · `Render` (a Dockerfile is also included for Docker hosts)
 
 ## Repo structure
 
@@ -58,6 +58,7 @@ Four tabs, built with Plotly Dash:
 ├── README.md
 ├── requirements.txt        full pipeline dependencies
 ├── LICENSE                 MIT
+├── render.yaml             Render deployment config
 ├── data/                   scrape inputs and acquisition notes (raw exports are gitignored)
 ├── src/                    the five pipeline scripts above
 ├── notebooks/eda.ipynb     exploratory analysis with executed charts
