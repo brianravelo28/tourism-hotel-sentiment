@@ -1,7 +1,10 @@
-# Hotel Reputation Dashboard: Miami & Orlando
+# Hotel Reputation Dashboard: Miami & Orlando*
 
 **[Live dashboard](https://hotel-reputation-dashboard.onrender.com/)** (free Render tier - sleeps after 15
 minutes idle, so the first load can take about a minute to wake up)
+
+*An active project, more data to come: the Orlando sample and Spanish coverage are still growing, so read the
+findings below as preliminary.
 
 **Do English- and Spanish-speaking hotel guests care about different things? An NLP pipeline and interactive
 dashboard built on 3,720 TripAdvisor reviews of 23 South Florida and Orlando hotels, 27% of them written in Spanish.**
