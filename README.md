@@ -1,5 +1,7 @@
 # Hotel Reputation Dashboard: Miami & Orlando*
 
+![Hotel Reputation Dashboard](docs/screenshot.png)
+
 **[Live dashboard](https://hotel-reputation-dashboard.onrender.com/)** (free Render tier - sleeps after 15
 minutes idle, so the first load can take about a minute to wake up)
 
