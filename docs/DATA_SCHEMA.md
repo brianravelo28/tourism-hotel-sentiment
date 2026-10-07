@@ -24,7 +24,8 @@ flowchart LR
 
 Red: raw scrape files, kept local and never published (raw exports may contain reviewer details).
 Yellow: intermediate model output, local only (`data/interim/`, gitignored). Green: derived tables published under
-`dashboard/data/`. They contain review text and hotel names, but no reviewer names, profile links or locations.
+`dashboard/data/`. They contain review text and hotel names, but no reviewer names, profile links or locations
+as data fields. Review and sentence text is published as written, so it can mention staff or other people by name.
 
 ## Tables in `dashboard/data/`
 
@@ -35,7 +36,7 @@ Yellow: intermediate model output, local only (`data/interim/`, gitignored). Gre
 | `review_text` | Cleaned review text (original language) |
 | `rating` | 1-5 stars |
 | `language` | Language the guest wrote in (`en`, `es`, ...), from `originalLanguage` |
-| `trip_type` | FAMILY, COUPLES, FRIENDS, SOLO, BUSINESS |
+| `trip_type` | FAMILY, COUPLES, FRIENDS, SOLO, BUSINESS, or NONE when not given |
 | `published_date` | Review date |
 | `sentiment_score` | 0 (negative) to 1 (positive): length-weighted mean of sentence scores |
 | `sentiment_label` | negative / neutral / positive (cut at 0.4 and 0.6) |

@@ -12,9 +12,11 @@ English and reports the translated language in `lang`. Labeling by `lang` initia
 real number was 45 in the first scrape. Later scrapes disabled machine translation entirely so Spanish reviews
 arrive in the original language.
 
-**Getting Spanish volume took deliberate scraping.** The actor returns English reviews first, then other languages,
-so shallow scrapes are almost all English. Spanish only appears at depth (roughly past the first 100 reviews per
-hotel), which is why the scrape inputs use a cap of 150-200 per hotel.
+**Getting Spanish volume took deliberate scraping.** The first scrape (no language setting, up to 50 reviews per
+hotel) was 5% Spanish. The actor lists English reviews ahead of other languages, so Spanish keeps accumulating as
+the per-hotel cap rises: Marriott Biscayne Bay returned 29 Spanish reviews at a cap of 100 and 91 at a cap of 200,
+and Hampton Inn Brickell went from 34 to 116. That is why the later scrape inputs request Spanish explicitly,
+disable machine translation, and use a cap of 150 or more per hotel.
 
 ## Pipeline
 
@@ -46,7 +48,8 @@ length-weighted mean of its sentence scores. For aspect polarity, a sentence cou
 
 **Complaints** are tagged sentences that are clearly negative (P(negative) >= 0.5) *and* sit in a review rated 3
 stars or lower, or that are overwhelmingly negative (>= 0.85) in any review. Sentence sentiment alone was too
-noisy for this: about half of its "negative" sentences sat in 5-star reviews and were mostly model errors.
+noisy for this: about half of its "negative" sentences sat in 5-star reviews, and the ones I spot-checked were
+mostly model errors.
 
 ### Reputation score (0-10)
 
@@ -61,7 +64,7 @@ volume_factor  = clip((log10(tripadvisor_review_count) - 2) / 2 * 10, 0, 10)
 ```
 
 Sentiment and rating are averaged over the **trailing 24 months** only, so every hotel is compared over the same
-period. Volume uses TripAdvisor's own review total for the hotel (298 to 24,951 here), not how many reviews we
+period. Volume uses TripAdvisor's own review total for the hotel (302 to 24,988 here), not how many reviews we
 scraped. Hotels are ranked within their city. Strengths are the aspects a hotel is most consistently praised for
 (at least 8 mentions); complaints are aspects with at least 2 complaint sentences.
 
@@ -90,8 +93,9 @@ generic sentences ("Overall, a wonderful experience") forced into an aspect, and
 as positive or negative.
 
 **Limits of this check:** the labels were made by the AI assistant that helped build the pipeline, not by
-independent annotators; 40 sentences per language leaves roughly +/-12 points of uncertainty; and only tagged
-sentences were checked, so recall (sentences that should have been tagged but weren't) is unmeasured.
+independent annotators; 40 sentences per language leaves roughly +/-12 points of uncertainty; the 0.55 threshold
+was chosen by looking at these same 80 sentences, so the ~90% figure is probably optimistic for new data; and only
+tagged sentences were checked, so recall (sentences that should have been tagged but weren't) is unmeasured.
 
 ## Corrections made along the way
 
@@ -102,11 +106,11 @@ Each of these was found by checking outputs rather than trusting that the code r
    but not the next problem.)
 2. **The NLI approach was unusable at scale and gave wrong answers.** Scoring 14 "the X was great/terrible"
    hypotheses per review took 12 seconds per review (about 13 hours for the dataset), and "the price was great"
-   scored near 1.0 for any positive review that never mentioned price. Replaced by sentence-level tagging (about
+   scored near 1.0 for positive reviews that never mentioned price. Replaced by sentence-level tagging (about
    25 minutes for the whole dataset).
 3. **Language was mislabeled** (`lang` vs `originalLanguage`, above).
 4. **The reputation score measured scraping depth.** Averaging over every scraped review made recency correlate
-   0.81 with the final score, because deeply scraped hotels reached back to 2017; volume saturated at 10 for every
+   0.81 with the final score, because deeply scraped hotels reached back to 2017; volume sat at 10 for all but one
    hotel. Fixed with the 24-month window and TripAdvisor's own review counts.
 5. **An early "Spanish reviews are happier" signal was a small-sample artifact** (88% vs 77% 5-star on 500 reviews;
    74% vs 76% on the full data).

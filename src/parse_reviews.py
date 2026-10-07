@@ -1,3 +1,11 @@
+"""Merge the raw Apify exports in data/ into one cleaned review table.
+
+Reads data/raw_reviews.json (the original scrape) and every data/dataset_*.json export, dedupes by review ID, labels
+each review's language by what the guest wrote (originalLanguage), and drops very short reviews.
+
+Writes data/raw_reviews.csv (one row per review, no reviewer fields) and data/hotels.csv (TripAdvisor's own review
+totals and rating per hotel). Both stay local; see data/README.md.
+"""
 import json
 import pandas as pd
 from pathlib import Path

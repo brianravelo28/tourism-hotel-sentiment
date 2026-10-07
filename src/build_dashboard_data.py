@@ -1,10 +1,11 @@
 """Turn the raw aspect-sentiment output (data/interim) into the tables the dashboard reads.
 
-Applies two quality rules learned from a hand-check of 80 tagged sentences:
+Applies three rules learned from a hand-check of 80 tagged sentences and a look at where sentiment errors occur:
   * keep only aspect tags whose similarity is >= MIN_ASPECT_SIM (aspect accuracy ~79% -> ~90%)
   * treat a sentence as neutral when the sentiment model isn't decisive (|p_pos - p_neg| <= NEUTRAL_BAND)
+  * flag a sentence as a complaint only if it is clearly negative in a low-rated review, or overwhelmingly negative
 
-Writes dashboard/data/processed_reviews.csv and dashboard/data/aspect_mentions.csv.
+Writes dashboard/data/processed_reviews.csv, aspect_mentions.csv and hotels.csv.
 """
 from pathlib import Path
 
